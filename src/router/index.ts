@@ -1,4 +1,5 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
+import index from '../views/index.vue'
 const routes = [
     {
         path: '/',
@@ -6,7 +7,7 @@ const routes = [
     },
     {
         path: '/home',
-        component: () => import('../App.vue')
+        component: index
     }
 ];
 
