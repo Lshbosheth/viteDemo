@@ -1,6 +1,7 @@
 {
   "name": "vitedemo",
   "version": "0.0.0",
+  "homepage": "https://Lshbosheth.github.io/vitedemo",
   "scripts": {
     "start": "npm run dev",
     "dev": "vite --open",
