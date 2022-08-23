@@ -4,5 +4,5 @@ module.exports = {
             entry: 'src/main.ts'
         }
     },
-    publicPath: process.env.NODE_ENV === 'production' ? '/' : '/'
+    publicPath: process.env.NODE_ENV === 'production' ? './' : '/'
 };
