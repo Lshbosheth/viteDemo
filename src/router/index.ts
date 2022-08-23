@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import index from '../views/index.vue'
 const routes = [
     {
@@ -12,7 +12,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(), //替代之前的mode，是必须的
+    history: createWebHistory(), //替代之前的mode，是必须的
     routes
 });
 export default router;
