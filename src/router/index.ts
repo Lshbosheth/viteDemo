@@ -12,7 +12,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(), //替代之前的mode，是必须的
+    history: createWebHistory('/viteDemo/'), //替代之前的mode，是必须的
     routes
 });
 export default router;
