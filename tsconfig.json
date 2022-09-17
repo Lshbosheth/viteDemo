@@ -7,8 +7,12 @@
     "jsx": "preserve",
     "moduleResolution": "node"
   },
+  "paths": {
+    "pkg": ["./packages"], 
+    "@": ["./src"], 
+  },
   "include": [
-    "src/**/*", "src/main.d.ts" //**/递归匹配任意子目录
+    "src/**/*", "src/main.d.ts" , "src/**/*.tsx", "src/**/*.vue", "pkg/**/*.ts", "pkg/**/*.d.ts", "pkg/**/*.tsx", "pkg/**/*.vue"
   ],
   "exclude": [
     "node_modules"

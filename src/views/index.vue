@@ -29,7 +29,6 @@ import { ref } from 'vue'
 import * as XLSX from 'xlsx'
 import { NButton, NUpload, NIcon, NUploadDragger, NText, NInput } from 'naive-ui'
 import { ArchiveOutline as ArchiveIcon } from '@vicons/ionicons5'
-import type { UploadFileInfo } from 'naive-ui'
 import _ from 'underscore';
 
 
@@ -39,7 +38,7 @@ const handleUploadChange = (file) =>{
   console.log(file)
   const files = file.file.file;
   const fileReader = new FileReader();
-  fileReader.onload = ev => {
+  fileReader.onload = (ev: any) => {
     try {
       const data = ev.target.result;
       const workbook = XLSX.read(data, {
