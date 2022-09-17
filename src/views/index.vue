@@ -1,44 +1,43 @@
 <template>
-  <el-upload
-    v-model:file-list="fileList"
-    class="upload-demo"
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :on-change="readExcel"
-    :auto-upload="false"
-    :limit="1"
+  <n-upload
+    multiple
+    directory-dnd
+    @change="handleUploadChange"
+    :max="1"
   >
-    <el-button type="primary">Click to upload</el-button>
+    <n-upload-dragger>
+      <div style="margin-bottom: 12px">
+        <n-icon size="48" :depth="3">
+          <archive-icon />
+        </n-icon>
+      </div>
+      <n-text style="font-size: 16px">
+        点击或者拖动文件到该区域来上传
+      </n-text>
     
-  </el-upload>
-  <el-button type="primary" @click="showAny">show Data</el-button>
-  <el-input
-    v-model="dataStr"
-    :rows="10"
-    type="textarea"
-    placeholder="Please input"
-  />
+    </n-upload-dragger>
+  </n-upload>
+  <n-button @click="showAny">show content</n-button>
+  <n-input
+      v-model:value="dataStr"
+      type="textarea"
+      placeholder="基本的 Textarea"
+    />
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import * as XLSX from 'xlsx'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { NButton, NUpload, NIcon, NUploadDragger, NText, NInput } from 'naive-ui'
+import { ArchiveOutline as ArchiveIcon } from '@vicons/ionicons5'
+import type { UploadFileInfo } from 'naive-ui'
 import _ from 'underscore';
-import type { UploadProps, UploadUserFile } from 'element-plus'
 
-const fileList = ref<UploadUserFile[]>([])
+
 let dataArray:any = []
 let dataStr= ref('1234')
-const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
-  console.log(file, uploadFiles)
-}
-
-const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
-  console.log(uploadFile)
-}
-const readExcel: UploadProps['onChange'] = (uploadFile) => {
-  const files = uploadFile.raw;
+const handleUploadChange = (file) =>{
+  console.log(file)
+  const files = file.file.file;
   const fileReader = new FileReader();
   fileReader.onload = ev => {
     try {
@@ -55,15 +54,6 @@ const readExcel: UploadProps['onChange'] = (uploadFile) => {
     }
   };
   fileReader.readAsBinaryString(files);
-}
-
-const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
-  return ElMessageBox.confirm(
-    `Cancel the transfert of ${uploadFile.name} ?`
-  ).then(
-    () => true,
-    () => false
-  )
 }
 
 const showAny = ()=> {
