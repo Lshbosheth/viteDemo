@@ -72,12 +72,12 @@ const showAny = ()=> {
     let cel = result.find(el => {
       return el['姓名'] == element['发起人姓名']
     })
-
+console.log(cel)
     cel.data.push(element['开始时间'].substr(5,6) + '加班' + element['加班时长'] + '小时')
   });
 
   let str:Array<string> = []
-  result.forEach(el => str.push((el['姓名'] + el.data.join(',')).replaceAll('0', '')))
+  result.forEach(el => str.push((el['姓名'] + el.data.join(','))))
   console.log(str)
   dataStr.value = str.join('\n');
 }
