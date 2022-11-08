@@ -46,6 +46,7 @@ const handleUploadChange = (file) =>{
       });
       const wsname = workbook.SheetNames[0]; //取第一张表
       let ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]); //生成json表格内容
+      console.log(ws)
       dataArray = ws
 
     } catch (e) {
@@ -54,12 +55,11 @@ const handleUploadChange = (file) =>{
   };
   fileReader.readAsBinaryString(files);
 }
-
 const showAny = ()=> {
 
   let result:any= []
   let nameList =_.uniq(_.pluck(dataArray, '发起人姓名'))
-
+  console.log(nameList)
   nameList.forEach(name => {
     result.push({
       '姓名': name,
@@ -79,9 +79,6 @@ const showAny = ()=> {
   let str:Array<string> = []
   result.forEach(el => str.push((el['姓名'] + el.data.join(',')).replaceAll('0', '')))
   console.log(str)
-  dataStr.value = str[0]
-  // console.log(result.join(','))
-  // dataStr = result.join(',')
-  console.log(dataStr)
+  dataStr.value = str.join('\n');
 }
 </script>
