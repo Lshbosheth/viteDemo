@@ -1,84 +1,33 @@
 <template>
-  <n-upload
-    multiple
-    directory-dnd
-    @change="handleUploadChange"
-    :max="1"
+  <el-upload
+      class="upload-demo"
+      drag
+      :with-credentials="true"
+      multiple
+      :on-change="change"
+      :auto-upload="false"
   >
-    <n-upload-dragger>
-      <div style="margin-bottom: 12px">
-        <n-icon size="48" :depth="3">
-          <archive-icon />
-        </n-icon>
+    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+    <div class="el-upload__text">
+      Drop file here or <em>click to upload</em>
+    </div>
+    <template #tip>
+      <div class="el-upload__tip">
+        jpg/png files with a size less than 500kb
       </div>
-      <n-text style="font-size: 16px">
-        点击或者拖动文件到该区域来上传
-      </n-text>
-    
-    </n-upload-dragger>
-  </n-upload>
-  <n-button @click="showAny">show content</n-button>
-  <n-input
-      v-model:value="dataStr"
-      type="textarea"
-      placeholder="基本的 Textarea"
-    />
+    </template>
+  </el-upload>
 </template>
-<script lang="ts" setup>
-import { ref } from 'vue'
-import * as XLSX from 'xlsx'
-import { NButton, NUpload, NIcon, NUploadDragger, NText, NInput } from 'naive-ui'
-import { ArchiveOutline as ArchiveIcon } from '@vicons/ionicons5'
-import _ from 'underscore';
 
-
-let dataArray:any = []
-let dataStr= ref('1234')
-const handleUploadChange = (file) =>{
-  console.log(file)
-  const files = file.file.file;
-  const fileReader = new FileReader();
-  fileReader.onload = (ev: any) => {
-    try {
-      const data = ev.target.result;
-      const workbook = XLSX.read(data, {
-        type: "binary"
-      });
-      const wsname = workbook.SheetNames[0]; //取第一张表
-      let ws = XLSX.utils.sheet_to_json(workbook.Sheets[wsname]); //生成json表格内容
-      console.log(ws)
-      dataArray = ws
-
-    } catch (e) {
-      return false;
-    }
-  };
-  fileReader.readAsBinaryString(files);
-}
-const showAny = ()=> {
-
-  let result:any= []
-  let nameList =_.uniq(_.pluck(dataArray, '发起人姓名'))
-  console.log(nameList)
-  nameList.forEach(name => {
-    result.push({
-      '姓名': name,
-      data: []
-    })
+<script setup lang="ts">
+import { UploadFilled } from '@element-plus/icons-vue'
+import { upload } from '../api/test'
+const change = (e: any) => {
+  console.log(e);
+  let form = new window.FormData();
+  form.append('file', e.raw)
+  upload(form).then((res) => {
+    console.log(res);
   })
-  
-
-  dataArray.forEach(element => {
-    let cel = result.find(el => {
-      return el['姓名'] == element['发起人姓名']
-    })
-console.log(cel)
-    cel.data.push(element['开始时间'].substr(5,6) + '加班' + element['加班时长'] + '小时')
-  });
-
-  let str:Array<string> = []
-  result.forEach(el => str.push((el['姓名'] + el.data.join(','))))
-  console.log(str)
-  dataStr.value = str.join('\n');
 }
 </script>
