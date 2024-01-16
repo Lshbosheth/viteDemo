@@ -1,12 +1,16 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
 const prefix = `monaco-editor/esm/vs`;
 
 export default defineConfig({
   plugins: [
-    vue()],
+      vue(),
+      monacoEditorPlugin({
+          languages: ['json', 'css', 'html', 'editorWorkerService']
+      })],
   base: './',
     build: {
         rollupOptions: {
