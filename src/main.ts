@@ -7,7 +7,7 @@ import { setupStore } from './store';
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 const app = createApp(App);
-
+import 'uno.css'
 setupStore(app)
 app.use(router);
 app.use(VueAxios, axios)

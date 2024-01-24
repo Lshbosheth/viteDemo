@@ -2,12 +2,14 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor';
+import unocss from '@unocss/vite';
 
 const prefix = `monaco-editor/esm/vs`;
 
 export default defineConfig({
   plugins: [
       vue(),
+      unocss(),
       monacoEditorPlugin({
           languages: ['json', 'css', 'html', 'editorWorkerService']
       })],

@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import index from '../views/index.vue'
 import socket from '../views/socket.vue'
+import unocss from '../views/unocss.vue'
 const routes = [
     {
         path: '/',
@@ -13,6 +14,10 @@ const routes = [
     {
         path: '/socket',
         component: socket
+    },
+    {
+        path: '/unocss',
+        component: unocss
     }
 ];
 
