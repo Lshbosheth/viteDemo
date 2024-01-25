@@ -10,15 +10,35 @@
 </template>
 <script setup lang="ts">
 import { onMounted } from 'vue'
-onMounted(() => {
-  const eventSource = new EventSource('http://localhost:1222/api/utils/sse');
-  eventSource.onmessage = ({ data }) => {
-    console.log(data);
-  }
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 
-  setTimeout(() => {
-    eventSource.close()
-  }, 100000)
+onMounted(() => {
+  // const eventSource = new EventSource('http://localhost:1222/api/utils/sse');
+  // eventSource.onmessage = ({ data }) => {
+  //   console.log(data);
+  // }
+  //
+  // setTimeout(() => {
+  //   eventSource.close()
+  // }, 100000)
+
+  const ctrl = new AbortController();
+  fetchEventSource('http://localhost:1222/api/utils/sse', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      foo: 'bar'
+    }),
+    signal: ctrl.signal,
+    onmessage(ev) {
+      console.log(ev);
+    },
+    onerror(err) {
+      throw err;
+    }
+  });
 })
 </script>
 <style scoped>
