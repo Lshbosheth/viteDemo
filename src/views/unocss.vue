@@ -11,8 +11,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { fetchEventSource } from '@microsoft/fetch-event-source';
-
-onMounted(() => {
+onMounted(async () => {
   // const eventSource = new EventSource('http://localhost:1222/api/utils/sse');
   // eventSource.onmessage = ({ data }) => {
   //   console.log(data);
@@ -23,20 +22,35 @@ onMounted(() => {
   // }, 100000)
 
   const ctrl = new AbortController();
+  // await fetchEventSource('http://localhost:1222/api/utils/sse', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     foo: 'bar'
+  //   }),
+  //   signal: ctrl.signal,
+  //   onmessage(ev) {
+  //     console.log(ev);
+  //   },
+  //   onerror(err) {
+  //     throw err;
+  //   }
+  // });
   fetchEventSource('http://localhost:1222/api/utils/sse', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key: 'value' }), // POST 请求的 Body
+    onopen: async (response) => {
+      console.log(response);
+      // 连接成功
     },
-    body: JSON.stringify({
-      foo: 'bar'
-    }),
-    signal: ctrl.signal,
-    onmessage(ev) {
-      console.log(ev);
+    onmessage: (event) => {
+      console.log('Received event:', event.data);
     },
-    onerror(err) {
-      throw err;
+    onerror: (err) => {
+      // 处理错误
     }
   });
 })

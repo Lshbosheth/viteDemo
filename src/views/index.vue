@@ -14,7 +14,6 @@
 <script setup lang="ts">
 import * as monaco from 'monaco-editor';
 import { onMounted, ref, toRaw, watchEffect } from 'vue'
-
 const htmlEditor = ref<monaco.editor.IStandaloneCodeEditor>(null as any)
 const CSSEditor = ref<monaco.editor.IStandaloneCodeEditor>(null as any)
 const JSEditor = ref<monaco.editor.IStandaloneCodeEditor>(null as any)

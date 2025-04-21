@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import index from '../views/index.vue'
 import socket from '../views/socket.vue'
 import unocss from '../views/unocss.vue'
+import mqtt from '../views/mqtt.vue'
 const routes = [
     {
         path: '/',
@@ -18,6 +19,10 @@ const routes = [
     {
         path: '/unocss',
         component: unocss
+    },
+    {
+        path: '/mqtt',
+        component: mqtt
     }
 ];
 
